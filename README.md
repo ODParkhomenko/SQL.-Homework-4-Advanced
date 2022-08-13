@@ -44,3 +44,16 @@ join Artists on Artists_Album.id_artist_aa =  Artists.id_artist
 where artist_name = 'Taylor Swift'
 
 group by collection_title
+
+
+
+
+
+select album_name, count(genre_name) from Albums
+join Artists_Album on Albums.id_album = Artists_Album.id_album_aa
+join Artists on Artists_Album.id_artist_aa = Artists.id_artist
+join Artists_Genres on Artists.id_artist = Artists_Genres.id_artist_ag
+join Genres on Genres.id_genre = Artists_Genres.id_genre_ag
+group by album_name
+having count(genre_name) > 1
+

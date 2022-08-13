@@ -57,3 +57,11 @@ join Genres on Genres.id_genre = Artists_Genres.id_genre_ag
 group by album_name
 having count(genre_name) > 1
 
+
+
+
+Select track_name from Tracks
+left join Collection_Tracks on Tracks.id_track = Collection_Tracks.id_track_ct
+where id_collection_ct is null
+
+

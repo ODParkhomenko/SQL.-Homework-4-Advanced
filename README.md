@@ -1,96 +1,28 @@
-# SQL.-Homework-4-Advanced
+# Домашнее задание к лекции «Продвинутая выборка данных»
 
-Select genre_name count(id_artist) from Genres 
-Join Artists_Genres on Genres.id_genre=Artists_Genres.id_genre_ag
+Написать SELECT-запросы, которые выведут информацию согласно инструкциям ниже.
 
+Внимание! Результаты запросов не должны быть пустыми (при необходимости добавьте данные в таблицы).
 
+1. количество исполнителей в каждом жанре;
+2. количество треков, вошедших в альбомы 2019-2020 годов;
+3. средняя продолжительность треков по каждому альбому;
+4. все исполнители, которые не выпустили альбомы в 2020 году;
+5. названия сборников, в которых присутствует конкретный исполнитель (выберите сами);
+6. название альбомов, в которых присутствуют исполнители более 1 жанра;
+7. наименование треков, которые не входят в сборники;
+8. исполнителя(-ей), написавшего самый короткий по продолжительности трек (теоретически таких треков может быть несколько);
+9. название альбомов, содержащих наименьшее количество треков.
 
-Select count(album_name) from Tracks
+Результатом работы будет 3 файла (с INSERT, SELECT запросами и CREATE запросами из предыдущего задания) в формате .sql (или .py/.ipynb, если вы будете писать запросы с использованием SQLAlchemy).  
+В случае если INSERT- и CREATE-запросы остались без изменений, приложите файлы c ними из предыдущих домашних заданий.
 
-join albums on Tracks.id_album_t = Albums.id_album
+---
 
-where album_release_year >= '20190101' and album_release_year <= '20201231'
+Результатом работы будет 3 файла в формате `.sql`:
 
+- с INSERT запросами (из предыдущей домашней работы)
+- с SELECT запросами (текущее задание)
+- с CREATE запросами (из второй домашней работы)
 
-select album_name, avg(track_duration) from Tracks
-
-join Albums on Tracks.id_album_t = Albums.id_album
-
-group by album_name
-
-
-
-select artist_name from Artists
-join Artists_Album on Artists.id_artist = Artists_Album.id_artist_aa
-join Albums on Albums.id_album = Artists_Album.id_album_aa
-where album_release_year not between '20200101' and '20201231'
-group by artist_name
-
-
-
-
-select collection_title from Collections
-
-join Collection_Tracks on Collection_Tracks.id_collection_ct = Collections.id_collection
-
-join Tracks on Collection_Tracks.id_track_ct = Tracks.id_track
-
-join Albums on Tracks.id_album_t = Albums.id_album
-
-join Artists_Album on Artists_Album.id_album_aa = Albums.id_album
-
-join Artists on Artists_Album.id_artist_aa =  Artists.id_artist
-
-where artist_name = 'Taylor Swift'
-
-group by collection_title
-
-
-
-
-
-select album_name, count(genre_name) from Albums
-join Artists_Album on Albums.id_album = Artists_Album.id_album_aa
-join Artists on Artists_Album.id_artist_aa = Artists.id_artist
-join Artists_Genres on Artists.id_artist = Artists_Genres.id_artist_ag
-join Genres on Genres.id_genre = Artists_Genres.id_genre_ag
-group by album_name
-having count(genre_name) > 1
-
-
-
-
-select track_name from Tracks
-left join Collection_Tracks on Tracks.id_track = Collection_Tracks.id_track_ct
-where id_collection_ct is null
-
-
-
-select artist_name, track_duration from Tracks
-join Albums on Tracks.id_album_t = Albums.id_album
-join Artists_Album on Artists_Album.id_album_aa = Albums.id_album
-join Artists on Artists_Album.id_ artist_aa = Artists.id_artist 
-where track_duration = (select min(track_duration) from tracks)
-
-
-
-select album_name, count(track_name) from Tracks
-join Albums on Tracks.id_album_t = Albums.id_album
-group by album_name
-
-
-
-
-select distinct album_name from Albums
-left join Tracks on Tracks.id_album_t = Albums.id_album
-where Tracks.id_album_t in (
-    select id_album_t from Tracks
-    group by id_album_t
-    having count(id) = (
-         select count(id_track)
-         from Tracks
-         group by id_album_t
-         order by count
-         limit 1
-)
-)
+> В случае если INSERT и CREATE запросы остались без изменений, приложите файлы c ними из предыдущих домашних заданий.

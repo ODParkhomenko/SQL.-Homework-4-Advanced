@@ -26,3 +26,21 @@ join Albums on Albums.id_album = Artists_Album.id_album_aa
 where album_release_year not between '20200101' and '20201231'
 group by artist_name
 
+
+
+
+select collection_title from Collections
+
+join Collection_Tracks on Collection_Tracks.id_collection_ct = Collections.id_collection
+
+join Tracks on Collection_Tracks.id_track_ct = Tracks.id_track
+
+join Albums on Tracks.id_album_t = Albums.id_album
+
+join Artists_Album on Artists_Album.id_album_aa = Albums.id_album
+
+join Artists on Artists_Album.id_artist_aa =  Artists.id_artist
+
+where artist_name = 'Taylor Swift'
+
+group by collection_title

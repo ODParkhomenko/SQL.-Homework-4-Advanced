@@ -60,8 +60,16 @@ having count(genre_name) > 1
 
 
 
-Select track_name from Tracks
+select track_name from Tracks
 left join Collection_Tracks on Tracks.id_track = Collection_Tracks.id_track_ct
 where id_collection_ct is null
+
+
+
+select artist_name, track_duration from Tracks
+join Albums on Tracks.id_album_t = Albums.id_album
+join Artists_Album on Artists_Album.id_album_aa = Albums.id_album
+join Artists on Artists_Album.id_ artist_aa = Artists.id_artist 
+where track_duration = (select min(track_duration) from tracks)
 
 

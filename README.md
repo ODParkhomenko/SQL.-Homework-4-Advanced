@@ -73,3 +73,8 @@ join Artists on Artists_Album.id_ artist_aa = Artists.id_artist
 where track_duration = (select min(track_duration) from tracks)
 
 
+
+select album_name, count(track_name) from Tracks
+join Albums on Tracks.id_album_t = Albums.id_album
+group by album_name
+

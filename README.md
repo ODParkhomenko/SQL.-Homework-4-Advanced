@@ -78,3 +78,19 @@ select album_name, count(track_name) from Tracks
 join Albums on Tracks.id_album_t = Albums.id_album
 group by album_name
 
+
+
+
+select distinct album_name from Albums
+left join Tracks on Tracks.id_album_t = Albums.id_album
+where Tracks.id_album_t in (
+    select id_album_t from Tracks
+    group by id_album_t
+    having count(id) = (
+         select count(id_track)
+         from Tracks
+         group by id_album_t
+         order by count
+         limit 1
+)
+)
